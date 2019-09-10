@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -16,84 +17,20 @@ namespace Julia_sets
         {
             InitializeComponent();
         }
-        
-        private void UserCoeff_Click(object sender, EventArgs e)
-        {
+
+        private static int i;
+
+        private void DrawSet(double cZero, double cOne){
             Bitmap bm = new Bitmap(picCanvas.ClientSize.Width, picCanvas.ClientSize.Height);
             using (Graphics g = Graphics.FromImage(bm))
             {
-                g.Clear(Color.Red);
+                g.Clear(Color.White);
 
-                int px, py,threshold;
-                int i,j,k;
-                double ax, ay, bx, by, cx, cy;
-                decimal czero, cone;
-                bx = 0;
-                by = 0;
-                px = 0;
-                py = 0;
-                czero = c0UserValue.Value;
-                cone = c1UserValue.Value;
-
-                //starting point run
-                threshold = 20;
-
-                    
-                //begin loop
-                //iterate through every pixel
-                for(i=0;i<600;i++)
-                {
-                    for(j=0; j<600;j++)
-                    {
-                        ax = -2.0 + i * (4.0 / picCanvas.ClientSize.Width);
-                        ay = -2.0 + j * (4.0 / picCanvas.ClientSize.Height);
-
-                        //try 4096 iterations
-                        for (k = 0; k < 4096; k++)
-                        {
-                            bx = (ax * ax) - (ay * ay) + Decimal.ToDouble(czero);
-                            by = 2 * ax * ay + Decimal.ToDouble(cone);
-
-                            //check if converge and paint the pixel blue
-                            if (((bx * bx) + (by * by) < threshold) && bx > -2 && bx < 2 && by > -2 && by < 2)
-                            {
-                                px = Convert.ToInt32((bx + 2) * (picCanvas.ClientSize.Width / 4));
-                                py = Convert.ToInt32((by + 2) * (picCanvas.ClientSize.Height / 4));
-                                if (px < picCanvas.ClientSize.Width && py < picCanvas.ClientSize.Height)
-                                    bm.SetPixel(px, py, Color.Blue);
-                            }
-
-                            //break loop if diverge >> threshold                           
-                            if (((bx * bx) + (by * by) > threshold))
-                                break;
-                            
-                            //move forward
-                            ax = bx;
-                            ay = by;
-                        }
-                    }
-                }
-                    picCanvas.Image = bm;
-            }
-        }
-
-        private void runDefaultValue(object sender, EventArgs e)
-        {
-            Bitmap bm = new Bitmap(picCanvas.ClientSize.Width, picCanvas.ClientSize.Height);
-            using (Graphics g = Graphics.FromImage(bm))
-            {
-                g.Clear(Color.Red);
-
-                int px, py, threshold;
+                int threshold;
                 int i, j, k;
-                double ax, ay, bx, by, cx, cy;
-                decimal czero, cone;
+                double ax, ay, bx, by;
                 bx = 0;
                 by = 0;
-                px = 0;
-                py = 0;
-                czero = 0;
-                cone = 1;
 
                 //starting point run
                 threshold = 20;
@@ -101,9 +38,9 @@ namespace Julia_sets
 
                 //begin loop
                 //iterate through every pixel
-                for (i = 0; i < 600; i++)
+                for (i = 0; i < picCanvas.ClientSize.Width; i++)
                 {
-                    for (j = 0; j < 600; j++)
+                    for (j = 0; j < picCanvas.ClientSize.Height; j++)
                     {
                         ax = -2.0 + i * (4.0 / picCanvas.ClientSize.Width);
                         ay = -2.0 + j * (4.0 / picCanvas.ClientSize.Height);
@@ -111,30 +48,53 @@ namespace Julia_sets
                         //try 4096 iterations
                         for (k = 0; k < 4096; k++)
                         {
-                            bx = (ax * ax) - (ay * ay) + Decimal.ToDouble(czero);
-                            by = 2 * ax * ay + Decimal.ToDouble(cone);
-
-                            //check if converge and paint the pixel blue
-                            if (((bx * bx) + (by * by) < threshold) && bx > -2 && bx < 2 && by > -2 && by < 2)
-                            {
-                                px = Convert.ToInt32((bx + 2) * (picCanvas.ClientSize.Width / 4));
-                                py = Convert.ToInt32((by + 2) * (picCanvas.ClientSize.Height / 4));
-                                if (px < picCanvas.ClientSize.Width && py < picCanvas.ClientSize.Height)
-                                    bm.SetPixel(px, py, Color.Blue);
-                            }
-
-                            //break loop if diverge >> threshold                           
-                            if (((bx * bx) + (by * by) > threshold))
+                            if (((ax * ax) + (ay * ay) >= threshold))
                                 break;
+
+                            bx = (ax * ax) - (ay * ay) + cZero;
+                            by = 2 * ax * ay + cOne;
 
                             //move forward
                             ax = bx;
                             ay = by;
                         }
+                        //check if converge and paint the pixel blue
+                        if (((ax * ax) + (ay * ay) < threshold))
+                        {
+                            bm.SetPixel(i, j, Color.Blue);
+                        }
+                        else
+                            bm.SetPixel(i, j, Color.Red);
+
                     }
                 }
                 picCanvas.Image = bm;
             }
+        }
+
+        private void UserCoeff_Click(object sender, EventArgs e)
+        {
+            double czero, cone;
+            czero = Convert.ToDouble(c0UserValue.Text);
+            cone = Convert.ToDouble(c1UserValue.Text);
+            DrawSet(czero, cone);            
+        }
+
+        private void runDefaultValue(object sender, EventArgs e)
+        {
+            double[,] defaultValues = new double[9, 2] { { -0.74543, 0.11301},{ 0.32, 0.043},{ 0.27334, 0.00742},{ -1.25,1},
+                    { 0.11,0.6557}, { 0.11031,0.67037},{ 0,1},{ -0.194,0.6557},{ -0.15652,1.03225} };
+            i++;
+
+            double valueTemp;
+
+            valueTemp = defaultValues[(i % 9), 0];
+            c0UserValue.Text = valueTemp.ToString();
+
+            valueTemp = defaultValues[(i % 9), 1];
+            c1UserValue.Text = valueTemp.ToString();
+
+            DrawSet(defaultValues[(i%9), 0], defaultValues[(i%9), 1]);
         }
 
     }

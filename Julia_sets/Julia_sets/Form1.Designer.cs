@@ -33,18 +33,16 @@
             this.userCoeff = new System.Windows.Forms.Button();
             this.c0label = new System.Windows.Forms.Label();
             this.c1Label = new System.Windows.Forms.Label();
-            this.c0UserValue = new System.Windows.Forms.NumericUpDown();
-            this.c1UserValue = new System.Windows.Forms.NumericUpDown();
+            this.c0UserValue = new System.Windows.Forms.TextBox();
+            this.c1UserValue = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.picCanvas)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.c0UserValue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.c1UserValue)).BeginInit();
             this.SuspendLayout();
             // 
             // picCanvas
             // 
             this.picCanvas.Location = new System.Drawing.Point(575, 20);
             this.picCanvas.Name = "picCanvas";
-            this.picCanvas.Size = new System.Drawing.Size(600, 600);
+            this.picCanvas.Size = new System.Drawing.Size(1187, 978);
             this.picCanvas.TabIndex = 0;
             this.picCanvas.TabStop = false;
             // 
@@ -90,27 +88,25 @@
             // 
             // c0UserValue
             // 
-            this.c0UserValue.DecimalPlaces = 2;
             this.c0UserValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c0UserValue.Location = new System.Drawing.Point(280, 301);
+            this.c0UserValue.Location = new System.Drawing.Point(182, 301);
             this.c0UserValue.Name = "c0UserValue";
-            this.c0UserValue.Size = new System.Drawing.Size(190, 75);
-            this.c0UserValue.TabIndex = 5;
+            this.c0UserValue.Size = new System.Drawing.Size(288, 75);
+            this.c0UserValue.TabIndex = 7;
             // 
             // c1UserValue
             // 
-            this.c1UserValue.DecimalPlaces = 2;
             this.c1UserValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c1UserValue.Location = new System.Drawing.Point(280, 395);
+            this.c1UserValue.Location = new System.Drawing.Point(182, 400);
             this.c1UserValue.Name = "c1UserValue";
-            this.c1UserValue.Size = new System.Drawing.Size(190, 75);
-            this.c1UserValue.TabIndex = 6;
+            this.c1UserValue.Size = new System.Drawing.Size(288, 75);
+            this.c1UserValue.TabIndex = 8;
             // 
             // juliaSetForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1198, 642);
+            this.ClientSize = new System.Drawing.Size(1806, 1010);
             this.Controls.Add(this.c1UserValue);
             this.Controls.Add(this.c0UserValue);
             this.Controls.Add(this.c1Label);
@@ -118,13 +114,11 @@
             this.Controls.Add(this.userCoeff);
             this.Controls.Add(this.playDefault);
             this.Controls.Add(this.picCanvas);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "juliaSetForm";
             this.Text = "Julia Set";
             ((System.ComponentModel.ISupportInitialize)(this.picCanvas)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.c0UserValue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.c1UserValue)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -135,8 +129,8 @@
         private System.Windows.Forms.Button userCoeff;
         private System.Windows.Forms.Label c0label;
         private System.Windows.Forms.Label c1Label;
-        private System.Windows.Forms.NumericUpDown c0UserValue;
-        private System.Windows.Forms.NumericUpDown c1UserValue;
+        private System.Windows.Forms.TextBox c0UserValue;
+        private System.Windows.Forms.TextBox c1UserValue;
     }
 }
 
